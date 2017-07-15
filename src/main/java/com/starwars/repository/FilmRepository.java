@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface FilmRepository extends JpaRepository<Film,Long>, CustomFilmRepository{
     List<Film> findAllByOrderByEpisodeIdAsc();
-    List<Film> findAllByReleaseDateGreaterThanEqual(Date releaseDate);
+    List<Film> findAllByReleaseDateGreaterThanEqual(@Param("releaseDate") Date releaseDate);
 
     @Query("select f from Film f where f.people.size = (select max(f2.people.size) from Film f2)")
     List<Film> fillAllByMaxPeople();
@@ -22,4 +22,6 @@ public interface FilmRepository extends JpaRepository<Film,Long>, CustomFilmRepo
 
     @Query("select f from Film f join f.people p where p.name = :name")
     List<Film> findAllByPeopleContains(@Param("name") String name);
+
+
 }
